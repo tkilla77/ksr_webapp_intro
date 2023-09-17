@@ -129,7 +129,7 @@ This line will put something into the browser's console (also visible from the d
 ![Developer Tools - Console](doc/dev_tools_console.png)
 
 #### Accessing the DOM
-We can access the _Document Object Model_ (DOM), which is the tree of HTML elements displayed by the page, using the global `document` variable. Use `getElementById()` to find an element with a certain `id`, or `getElementsByName()` (note the plural) to retrieve all elements with a certain tag (element) name:
+We can access the _Document Object Model_ (DOM), which is the tree of HTML elements displayed by the page, using the global `document` variable. Use `getElementById()` to find an element with a certain `id`, or `getElementsByTagName()` (note the plural) to retrieve all elements with a certain tag (element) name:
 
 ```js
 let buttons = document.getElementsByTagName('button');
