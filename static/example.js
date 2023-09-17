@@ -1,10 +1,11 @@
 // Log to JS console:
-console.log("Javascript Loading...")
+console.log("Javascript loading...");
 
 // Access to the Document Object Model (DOM) through 'document'
 // Variables declared using `let`
-let button1 = document.getElementById("button1");
-let textArea = document.getElementById("text");
+let buttons = document.getElementsByTagName('button');
+let textArea = document.getElementById('text');
+console.log(`Text element says '${textArea.innerText}'`);
 
 // Listeners allow to attach code to any event:
 let clicks = 0;
@@ -12,9 +13,11 @@ function handleClick() {
     console.log("button1 clicked!");
     clicks += 1;
     // We can modify the DOM or parts of it
-    textArea.innerText = `Clicked ${clicks} time(s)!`;
+    let div = document.createElement("div");
+    div.innerText = `Clicked ${clicks} time(s)!`;
+    textArea.appendChild(div);
 }
-button1.addEventListener("click", handleClick);
+buttons[0].addEventListener("click", handleClick);
 
 async function updateTemperature() {
     const url = '/api/bodensee';
@@ -34,5 +37,4 @@ async function updateTemperature() {
     }
 }
 
-let button2 = document.getElementById("button2");
-button2.addEventListener("click", updateTemperature);
+buttons[1].addEventListener("click", updateTemperature);

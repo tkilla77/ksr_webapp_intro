@@ -18,8 +18,8 @@ Let's build a simple web page consisting of one HTML file and one CSS, both stor
         <link rel="stylesheet" href="example.css">
     </head>
     <body>
-        <button id="button1">Click me!</button>
-        <button id="button2">... me too!</button>
+        <button>Click me!</button>
+        <button>... me too!</button>
         <div id="text">Oh, nothing yet</div>
     </body>
 </html>
@@ -100,3 +100,81 @@ The server answers with a [response code](https://de.wikipedia.org/wiki/HTTP-Sta
   * **304** (UNMODIFIED): Request ist OK, the resource was not changed and is omitted from the response.
   * **404** (NOT FOUND): Resource not found.
 
+### Javascript
+
+Transferring static resources (files) using HTTP is all good, but can we use the same mechanism to transport other pieces of information from the server to the client? Of course!
+
+We are going to use Javascript to make requests to our server. But before we do this, we need to get our feet wet with Javascript: the programming language that the browser (client) can execute.
+
+Let's include a Javascript resource from our HTML, typically from within the `head` element:
+
+```html
+  <head>
+    <script type="module" src="example.js"/>
+  </head>
+```
+
+Note that `script` uses the `src` attribute to name the file, while the `link` element uses `href` to include the CSS - never mind the inconsistency.
+
+The `type="module"` attribute ensures that our Javascript is forced to be modern type Javascript and we don't need to bother with old quirks from the past.
+
+Oh, we need to create the `example.js` file, of course, it should also be placed into the `static` folder. Let's write our first line of JS:
+
+```js
+console.log("Javascript Loading...");
+```
+
+This line will put something into the browser's console (also visible from the developer tools) - much like the `print` function in Python. Reload the browser tab containing our webpage and check if something appears in the console!
+
+![Developer Tools - Console](doc/dev_tools_console.png)
+
+#### Accessing the DOM
+We can access the _Document Object Model_ (DOM), which is the tree of HTML elements displayed by the page, using the global `document` variable. Use `getElementById()` to find an element with a certain `id`, or `getElementsByName()` (note the plural) to retrieve all elements with a certain tag (element) name:
+
+```js
+let buttons = document.getElementsByTagName('button');
+let textarea = document.getElementById('text');
+console.log(`Text element says '${textarea.innerText}'`);
+```
+
+Note:
+  * Variables need to be _declared_ using `let` when they are first used.
+  * Statements are terminated by a semicolon (`;`), although they can usually be omitted.
+  * Strings in backticks (\`) can be interpolated with expressions in `${}`.
+
+
+#### Event Listeners
+We would like to execute a bit of code when the buttons are clicked. We can attach a function to the `click` event as follows - remember that `buttons` contains the two buttons on our page.
+
+```js
+function handleClick() {
+    console.log("button 1 clicked!");
+}
+buttons[0].addEventListener("click", handleClick);
+```
+
+Note:
+  * Javascript follows the syntax of C or Java.
+  * Curly braces for blocks.
+  * A function is declared using the `function` keyword.
+  * To attach the listener, we use the function's name but do not call it (no parentheses).
+
+#### Modifying the DOM
+Let's modify the DOM by adding child elements to the text element. Each added `div` has its `innerText` set.
+
+```js
+let clicks = 0;
+function handleClick() {
+    console.log("button1 clicked!");
+    clicks += 1;
+    // We can modify the DOM or parts of it
+    let div = document.createElement("div");
+    div.innerText = `Clicked ${clicks} time(s)!`;
+    textArea.appendChild(div);
+}
+buttons[0].addEventListener("click", handleClick);
+```
+
+Note:
+  * To add elements to the DOM, we need to first create them using the `document.createElement()` function and can then insert them in the correct location using `element.appendChild()`.
+  * Text can be set on an element using the `innerText` property.
