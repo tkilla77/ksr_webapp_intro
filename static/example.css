@@ -1,10 +1,12 @@
-#text {
-    background-color: palegreen;
-    font-family: 'Courier New', Courier, monospace;
-    margin: 1em 0;
-    padding: 0.5em;
-}
-
+/* Style the body element. */
 body {
     margin: 1em;
+}
+
+/* Style the div element with id `text`. */
+#text {
+    background-color: palegreen;
+    font-family: monospace;
+    margin: 1em 0;
+    padding: 0.5em;
 }

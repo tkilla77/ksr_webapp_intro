@@ -1,6 +1,6 @@
 from flask import Flask
 
-app = Flask("my app")
+app = Flask("example app")
 
 @app.route("/hello/<name>")
 def hello(name):

@@ -27,9 +27,11 @@ async function updateTemperature() {
     // instead of the actual response. We can wait until fetching is done
     // using await (but the function needs to be async for this).
     let response = await fetched;
-    let json_data = await response.json();
-    console.log(json_data);
-    textArea.innerText = `Der Bodensee ist gerade ${json_data.temp}° warm.`;
+    if (response.ok) {
+        let json_data = await response.json();
+        console.log(json_data);
+        textArea.innerText = `Der Bodensee ist gerade ${json_data.temp}° warm.`;
+    }
 }
 
 let button2 = document.getElementById("button2");
