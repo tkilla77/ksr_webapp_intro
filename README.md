@@ -110,7 +110,7 @@ Let's include a Javascript resource from our HTML, typically from within the `he
 
 ```html
   <head>
-    <script type="module" src="example.js"/>
+    <script type="module" src="example.js"></script>
   </head>
 ```
 
@@ -121,7 +121,7 @@ The `type="module"` attribute ensures that our Javascript is forced to be modern
 Oh, we need to create the `example.js` file, of course, it should also be placed into the `static` folder. Let's write our first line of JS:
 
 ```js
-console.log("Javascript Loading...");
+console.log("Javascript loading...");
 ```
 
 This line will put something into the browser's console (also visible from the developer tools) - much like the `print` function in Python. Reload the browser tab containing our webpage and check if something appears in the console!
