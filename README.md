@@ -178,3 +178,83 @@ buttons[0].addEventListener("click", handleClick);
 Note:
   * To add elements to the DOM, we need to first create them using the `document.createElement()` function and can then insert them in the correct location using `element.appendChild()`.
   * Text can be set on an element using the `innerText` property.
+
+#### Dynamic Requests: Asynchronous Fetch
+I promised we could make HTTP requests using Javascript - we use the `fetch()` function for this.
+
+But there is a problem: network requests may take a long time, depending on network speed and server properties. We want to avoid freezing the browser while the request is under way. This can be achieved using the `async` and `await` keywords.
+
+In the example below, we request a resource from wiewarm.ch - open it first [in a browser](https://www.wiewarm.ch/api/v1/bad.json/16) to see what it returns. Aha, we receive a piece of text in the JSON (JavaScript Object Notation) format that we can process very easily using Javascript. It's very similar to Python dictionaries and lists: named elements can be accessed using their _key_.
+
+```js
+async function updateTemperature() {
+    const url = 'https://www.wiewarm.ch/api/v1/bad.json/16';
+
+    let fetched = fetch(url);
+    let response = await fetched;
+    let json_data = await response.json();
+    console.log(json_data);
+    textArea.innerText = `Der Bodensee ist ${json_data.becken.Bodensee.temp}° warm.`;
+}
+
+buttons[1].addEventListener("click", updateTemperature);
+```
+
+Above, we define a new function `updateTemperature` which we later attach to the second button.
+
+The HTTP request is initiated using the built-in `fetch` function. Because the request may take a while, the function does not return the server's response directly, but a `Promise` object instead.
+
+A _promise_ is a handle for the future result of a longer running function. Once it is _fulfilled_, the result can be accessed. We can wait for it to _settle_ by using the `await` keyword prepended to the promise. Because `await` causes our function to become long-running too, we are required to mark it with `async`, which means that our function automatically also returns a promise to its callers.
+
+Note how parsing the JSON text also produces a promise, because it could take longer for large objects. We use `await` here as well.
+
+Let's try out what happens when we click on the second button! Make sure to also watch the requests being made on the _Network_ tab.
+
+### Dynamic Responses
+
+We have seen above how to make dynamic HTTP requests using Javascript, which allows us to modify the web page without reloading the entire page.
+
+The response came from the `wiewarm.ch` server, and we have to yet given any thought to how the response was generated. Possibly, the server has many files for each public pool and its temperatures - on the other hand, it is more likely that the temperatures are stored in a database and the response is dynamically generated for each request.
+
+This is also what we would like to achieve, in order to for example play a web game that is executed on the server.
+
+Flask allows us to create _routes_, endpoints in Python code that respond to HTTP requests to certain paths. In our `app.py`, we can add routes as follows:
+
+```py
+@app.route("/hello/<name>")
+def hello(name):
+    return f"Nice to meet you, {name}!"
+```
+
+This tells Flask to send all requests that match `/hello/<something>` to the `hello` function, passing whatever was appended as function argument. We can directly return a string.
+
+Let's test that code and go to http://localhost:5000/hello/world!
+
+#### Returning JSON
+If our route function returns a Python dictionary instead of a string, Flask turns it into JSON if possible. If we want to create our own temperature server (not necessarily with accurate temperature readings), we could add the following route:
+
+```py
+@app.route("/api/bodensee")
+def json_api():
+    response = { 'becken': {'Bodensee' : { 'temp' : 33.3 } } }
+    return response
+```
+
+If we change the URL in our Javascript to point to the local endpoint, we now have a dynamic web page that and a dynamic server that executes Python code whenever a matching request is made:
+
+```js
+  // (in updateTemperature)
+  const url = '/api/bodensee';
+```
+
+## Next Steps
+We now have all the tools in our hands to build web apps:
+  * Author the HTML, CSS and JS files in `static` and serve them using Flask.
+  * Dynamically fetch JSON data using Javascript and update the HTML accordingly.
+  * Provide dynamic JSON content from our Flask server running Python.
+
+For our web-app game, what we need to do is:
+  * Move the static pages into the `static` folder.
+  * Run the Python game from Flask.
+  * Create Flask routes to play the game, and wire routes to the game on the server.
+  * Update the HTML frontend based on the JSON responses from the server.

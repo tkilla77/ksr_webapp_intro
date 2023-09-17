@@ -33,7 +33,8 @@ async function updateTemperature() {
     if (response.ok) {
         let json_data = await response.json();
         console.log(json_data);
-        textArea.innerText = `Der Bodensee ist gerade ${json_data.temp}° warm.`;
+        textArea.innerText = `Der Bodensee ist gerade ${json_data.becken.Bodensee.temp}° warm.`;
+        //textArea.innerText = `Der Bodensee ist gerade ${json_data.temp}° warm.`;
     }
 }
 

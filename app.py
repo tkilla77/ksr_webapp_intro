@@ -8,6 +8,5 @@ def hello(name):
 
 @app.route("/api/bodensee")
 def json_api():
-    response = { 'becken': 'Bodensee', 'temp' : 33.3}
+    response = { 'becken': { 'Bodensee' : { 'temp' : 33.3 } } }
     return response
-
