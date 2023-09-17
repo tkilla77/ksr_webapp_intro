@@ -1,0 +1,10 @@
+#text {
+    background-color: palegreen;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 1em 0;
+    padding: 0.5em;
+}
+
+body {
+    margin: 1em;
+}
