@@ -240,7 +240,7 @@ def json_api():
     return response
 ```
 
-If we change the URL in our Javascript to point to the local endpoint, we now have a dynamic web page that and a dynamic server that executes Python code whenever a matching request is made:
+If we change the URL in our Javascript to point to the local endpoint, we now have a dynamic web page and a dynamic server that executes Python code whenever a matching request is made:
 
 ```js
   // (in updateTemperature)
