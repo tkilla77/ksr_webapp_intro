@@ -190,8 +190,8 @@ In the example below, we request a resource from wiewarm.ch - open it first [in 
 async function updateTemperature() {
     const url = 'https://www.wiewarm.ch/api/v1/bad.json/16';
 
-    let fetched = fetch(url);
-    let response = await fetched;
+    let promise = fetch(url);
+    let response = await promise;
     let json_data = await response.json();
     console.log(json_data);
     textArea.innerText = `Der Bodensee ist ${json_data.becken.Bodensee.temp}° warm.`;
@@ -214,7 +214,7 @@ Let's try out what happens when we click on the second button! Make sure to also
 
 We have seen above how to make dynamic HTTP requests using Javascript, which allows us to modify the web page without reloading the entire page.
 
-The response came from the `wiewarm.ch` server, and we have to yet given any thought to how the response was generated. Possibly, the server has many files for each public pool and its temperatures - on the other hand, it is more likely that the temperatures are stored in a database and the response is dynamically generated for each request.
+The response came from the `wiewarm.ch` server, and we have not yet given any thought to how the response was generated. Possibly, the server has many files for each public pool and its temperatures - on the other hand, it is more likely that the temperatures are stored in a database and the response is dynamically generated for each request.
 
 This is also what we would like to achieve, in order to for example play a web game that is executed on the server.
 
